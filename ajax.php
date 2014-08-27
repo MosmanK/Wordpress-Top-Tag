@@ -1,5 +1,6 @@
 <?php 
-
+if($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+	
 	/*
 	@Curl Bağlantı Fonksiyonu
 	*/
@@ -27,13 +28,14 @@
 		$etiketGoogleTag = str_replace(' ','+',$keyword);
 		$Site = getir('https://www.google.com.tr/search?hl=tr&as_q='.$etiketGoogleTag.'');
 		$Site =   str_replace(array("\t","\n","\r"),"",$Site);  
-		$Pattern = '|<p class="msrl" style="margin:3px 8px"><a href="(.*?)">(.*?)</a></p>|si';
+		$Pattern = '|<p class="(.*?)"><a href="/search?(.*?)">(.*?)</a></p>|si';
 		
 		preg_match_all($Pattern, $Site, $Sonuc);
 		
+		
 			$tags = array();
 			
-			foreach($Sonuc[2] as $tag)
+			foreach($Sonuc[3] as $tag)
 			{
 				$tags[] = strip_tags($tag);
 			}
@@ -47,7 +49,7 @@
 	}
 	
 	
-	
+}
 	
 	
 ?>	

@@ -1,4 +1,10 @@
 <?php 
+// Make sure we don't expose any info if called directly
+if ( !function_exists( 'add_action' ) ) {
+	echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
+	exit;
+}
+
 /*
 Plugin Name: Wordpress Top Tags
 Plugin URI: http://batuhankucukali.com
@@ -43,7 +49,6 @@ $(document).ready(function(){
 			data: {"keyword":keyword},
 			dataType: "json",
 			success: function(data) {
-				
 				if(data.data != '') {
 					$("#new-tag-post_tag").val(data.data);
 				}else{
